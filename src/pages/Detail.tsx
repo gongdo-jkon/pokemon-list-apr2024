@@ -1,66 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 import Box from "@mui/material/Box";
-import { PokemonClient } from "pokenode-ts";
-
-function HomeIcon(props: SvgIconProps) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-    </SvgIcon>
-  );
-}
-export interface PokemonDetailTypes {
-  id: number;
-  name: string;
-  sprites: {
-    front_default: string;
-  };
-  height: number;
-  weight: number;
-  abilities: AbilitiesTypes[];
-  stats: StatsTypes[];
-  types: TypesTypes[];
-}
-
-interface AbilitiesTypes {
-  ability: AbilityTypes;
-  slot: number;
-}
-interface AbilityTypes {
-  name: string;
-  url: string;
-}
-interface StatsTypes {
-  base_stat: number;
-  effor: number;
-  stat: StatTypes;
-}
-interface StatTypes {
-  name: string;
-  url: string;
-}
-interface TypesTypes {
-  slot: number;
-  type: Type;
-}
-interface Type {
-  name: string;
-  url: string;
-}
+import { PokemonDetailType } from "../shared/types";
+import HomeIcon from "../components/icons/HomeIcon";
+import SubTitle from "../components/detail/SubTitle";
+import Content from "../components/detail/Content";
 
 const Detail = () => {
   const params = useParams();
   const id = parseInt(params.id ?? "0");
   const navigate = useNavigate();
-  const [data, setData] = useState<PokemonDetailTypes>();
+  const [data, setData] = useState<PokemonDetailType>();
 
   const height = data?.height && data?.height / 10;
   const weight = data?.weight && data?.weight / 10;
-
-  const pokeApi = new PokemonClient();
 
   const fetchPokemon = async () => {
     try {
@@ -113,9 +67,10 @@ const Detail = () => {
           No. {String(data?.id).padStart(4, "0")}
         </Box>
         <Box sx={{ fontSize: "36px", fontWeight: "bold", color: "gray" }}>
-          {data?.name}
+          {data?.name &&
+            data?.name.charAt(0).toUpperCase() + data?.name.slice(1)}
         </Box>
-        <Box sx={{}}>
+        <Box>
           <Box
             component="img"
             src={data?.sprites.front_default}
@@ -123,88 +78,47 @@ const Detail = () => {
             sx={{ width: "300px" }}
           />
         </Box>
-        <Box sx={{ fontSize: "24px", color: "gray", my: 2 }}>
-          Height / Weight
-        </Box>
+        <SubTitle title="Height / Weight" />
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          <Box
-            sx={{
-              bgcolor: "lightgoldenrodyellow",
-              borderRadius: 5,
-              width: "100px",
-              p: 1.5,
-              m: 1,
-            }}
-          >
-            {height?.toFixed(1)} m
-          </Box>{" "}
-          <Box
-            sx={{
-              bgcolor: "lightgoldenrodyellow",
-              borderRadius: 5,
-              width: "100px",
-              p: 1.5,
-              m: 1,
-            }}
-          >
-            {weight?.toFixed(1)} kg
-          </Box>
+          <Content
+            content={`${height?.toFixed(1)} m`}
+            color="lightgoldenrodyellow"
+          />
+          <Content
+            content={`${weight?.toFixed(1)} kg`}
+            color="lightgoldenrodyellow"
+          />
         </Box>
-        <Box
-          sx={{
-            fontSize: "24px",
-            color: "gray",
-            my: 2,
-          }}
-        >
-          Ability
-        </Box>
+        <SubTitle title="Ability" />
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          {data?.abilities.map((e, i) => {
+          {data?.abilities.map((e) => {
             return (
-              <Box
-                key={i}
-                sx={{
-                  bgcolor: "lightcyan",
-                  borderRadius: 5,
-                  width: "100px",
-                  p: 1.5,
-                  m: 1,
-                }}
-              >
-                {e.ability.name}
-              </Box>
+              <Content
+                key={e.ability.name}
+                content={e.ability.name}
+                color="lightcyan"
+              />
             );
           })}
         </Box>
-        <Box sx={{ fontSize: "24px", color: "gray", my: 2 }}>Stat</Box>
+        <SubTitle title="Stat" />
         <Box sx={{ mb: 2 }}>
-          {data?.stats.map((e) => {
+          {data?.stats.map((e, i) => {
             return (
-              <Box key={1} sx={{ display: "flex", justifyContent: "center" }}>
-                <Box
-                  sx={{
-                    bgcolor: "lightgreen",
-                    borderRadius: 5,
-                    width: "180px",
-                    p: 1.5,
-                    m: 1,
-                  }}
-                >
-                  {e.stat.name}
-                </Box>
-                <Box
-                  sx={{
-                    bgcolor: "lightcoral",
-                    borderRadius: 5,
-                    width: "50px",
-                    alignContent: "center",
-                    p: 1.5,
-                    m: 1,
-                  }}
-                >
-                  {e.base_stat}
-                </Box>
+              <Box
+                key={e.stat.name}
+                sx={{ display: "flex", justifyContent: "center" }}
+              >
+                <Content
+                  content={e.stat.name}
+                  color="lightgreen"
+                  width="180px"
+                />
+                <Content
+                  content={e.base_stat.toString()}
+                  color="lightcoral"
+                  width="50px"
+                />
               </Box>
             );
           })}
