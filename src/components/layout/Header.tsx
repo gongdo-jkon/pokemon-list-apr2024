@@ -1,7 +1,26 @@
 import React from "react";
+import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  return <div>Header</div>;
+  const navigate = useNavigate();
+  return (
+    <Box
+      sx={{
+        fontSize: "36px",
+        fontWeight: "Bold",
+        textAlign: "center",
+      }}
+    >
+      <Box
+        component="span"
+        sx={{ cursor: "pointer" }}
+        onClick={() => navigate("/")}
+      >
+        Pokédex
+      </Box>
+    </Box>
+  );
 };
 
 export default Header;

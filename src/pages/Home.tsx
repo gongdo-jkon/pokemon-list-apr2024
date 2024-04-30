@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
@@ -6,36 +7,20 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 import { PokemonClient } from "pokenode-ts";
+import { PokemonDetailTypes } from "./Detail";
 
 interface NamedAPIResource {
   name: string;
   url: string;
 }
-interface PokemonTypes {
-  id: number;
-  name: string;
-  abilities: [];
-  types: TypesType[];
-  sprites: SpritesType;
-}
-interface SpritesType {
-  front_default: string;
-}
-interface Type {
-  name: string;
-  url: string;
-}
-interface TypesType {
-  slot: number;
-  type: Type;
-}
 
 const Home = () => {
   const [list, setList] = useState<NamedAPIResource[]>();
-  const [data, setData] = useState<PokemonTypes[]>([]);
+  const [data, setData] = useState<PokemonDetailTypes[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  console.log(loading);
+
+  const navigate = useNavigate();
 
   console.log(data);
 
@@ -45,7 +30,6 @@ const Home = () => {
     try {
       const { results } = await pokeApi.listPokemons((page - 1) * 20, 20);
       setList(results);
-      console.log(results);
       list && getPokemon(list);
     } catch (error) {
       console.error(error);
@@ -84,10 +68,9 @@ const Home = () => {
   }, [list]);
 
   return (
-    <>
+    <Box sx={{ my: 2 }}>
       <>{loading ? <>Loading ...</> : <></>}</>
-      <Box>
-        <div>{page} page</div>
+      <Box sx={{ my: 2 }}>
         <Grid container spacing={2}>
           {data?.map((pokemon, index) => {
             return (
@@ -98,12 +81,16 @@ const Home = () => {
                     border: "1px solid black",
                     display: "flex",
                     flexDirection: "column",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    navigate(`/${pokemon.id}`);
                   }}
                 >
-                  <Box className="name" sx={{ fontSize: "10px" }}>
+                  <Box className="name" sx={{ fontSize: "12px" }}>
                     No. {pokemon.id}
                   </Box>
-                  <Box className="name" sx={{ fontSize: "16px" }}>
+                  <Box className="name" sx={{ fontSize: "20px" }}>
                     {" "}
                     {pokemon.name}
                   </Box>
@@ -116,9 +103,9 @@ const Home = () => {
                       return (
                         <Box
                           key={i}
-                          p={1}
-                          mr={1}
                           sx={{
+                            p: 1,
+                            mr: 1,
                             bgcolor: "gray",
                             borderRadius: 1.5,
                             color: "white",
@@ -135,17 +122,20 @@ const Home = () => {
           })}
         </Grid>
       </Box>
-      <Stack spacing={2} direction="row">
-        {page > 1 ? (
-          <Button variant="contained" onClick={handlePrevClick}>
-            Prev
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Stack spacing={2} direction="row">
+          {page > 1 ? (
+            <Button variant="contained" onClick={handlePrevClick}>
+              Prev
+            </Button>
+          ) : null}
+          <Button variant="contained" onClick={handleNextClick}>
+            Next
           </Button>
-        ) : null}
-        <Button variant="contained" onClick={handleNextClick}>
-          Next
-        </Button>
-      </Stack>
-    </>
+        </Stack>
+        <Box>{page} page</Box>
+      </Box>
+    </Box>
   );
 };
 
