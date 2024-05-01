@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/pokemon-list-apr2024/static/css/main.80ee5892.css",
-    "main.js": "/pokemon-list-apr2024/static/js/main.030b57a7.js",
+    "main.js": "/pokemon-list-apr2024/static/js/main.f2070f03.js",
     "index.html": "/pokemon-list-apr2024/index.html",
     "main.80ee5892.css.map": "/pokemon-list-apr2024/static/css/main.80ee5892.css.map",
-    "main.030b57a7.js.map": "/pokemon-list-apr2024/static/js/main.030b57a7.js.map"
+    "main.f2070f03.js.map": "/pokemon-list-apr2024/static/js/main.f2070f03.js.map"
   },
   "entrypoints": [
     "static/css/main.80ee5892.css",
-    "static/js/main.030b57a7.js"
+    "static/js/main.f2070f03.js"
   ]
 }
