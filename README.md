@@ -1,46 +1,17 @@
-# Getting Started with Create React App
+# Pokemon List April 2024
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 구현 목적
 
-## Available Scripts
+이 프로젝트의 주된 목적은 포켓몬 API를 활용하여 최신 포켓몬 데이터를 효과적으로 제공하고, 사용자 친화적인 인터페이스를 통해 포켓몬 정보를 쉽게 탐색하고 조회할 수 있는 웹 애플리케이션을 구현하는 것입니다. 사용자가 다양한 포켓몬의 상세 정보를 빠르고 정확하게 확인할 수 있도록 돕고자 합니다.
 
-In the project directory, you can run:
+## 구현 목표
 
-### `yarn start`
+- 데이터의 정확성과 최신성 보장: 신뢰할 수 있는 포켓몬 API를 통해 최신의 포켓몬 데이터를 수집하고 제공합니다.
+- 사용자 경험 향상: 직관적인 사용자 인터페이스(UI)와 효율적인 사용자 경험(UX) 디자인을 구현하여, 모든 연령층의 사용자가 쉽게 사용할 수 있게 합니다.
+- 접근성 강화: 다양한 디바이스에서 원활하게 작동하는 반응형 디자인을 적용하여, 사용자가 어떤 환경에서도 편리하게 정보를 접근할 수 있게 합니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 주요 기능
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 포켓몬 리스트 조회: 사용자는 웹 페이지를 통해 다양한 포켓몬의 리스트를 조회할 수 있습니다. 각 포켓몬에 대한 기본적인 정보가 리스트 형태로 제공됩니다.
+- 상세 정보 조회: 포켓몬을 클릭하면 해당 포켓몬의 상세 정보를 볼 수 있는 페이지로 이동합니다. 이 페이지에서는 포켓몬의 특성, 능력치, 진화 형태 등 다양한 정보를 제공합니다.
+- 로딩 스피너 표시: 데이터를 불러오는 동안 사용자에게 로딩 중임을 알리는 스피너가 표시됩니다. 이는 사용자에게 시스템이 작동 중임을 시각적으로 알려주어 대기 시간의 불편함을 줄여줍니다.

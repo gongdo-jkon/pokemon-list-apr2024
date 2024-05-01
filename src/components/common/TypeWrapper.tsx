@@ -1,14 +1,15 @@
+import { Box } from "@mui/material";
 import { Pokemon } from "pokenode-ts";
 import { TYPES_COLORS } from "../../shared/data";
-import { Box } from "@mui/material";
 
-interface PokemonTypeProps {
+interface TypeWrapperPropsType {
   pokemon: Pokemon;
+  width?: string;
 }
 
-const PokemonType: React.FC<PokemonTypeProps> = ({ pokemon }) => {
+export const TypeWrapper = ({ pokemon, width }: TypeWrapperPropsType) => {
   return (
-    <>
+    <Box className="types" sx={{ display: "flex", justifyContent: "center", mx: "auto", width: width ?? "100%" }}>
       {pokemon.types.map((type) => {
         const bgColor = TYPES_COLORS[type.type.name] || "gray";
         return (
@@ -29,8 +30,6 @@ const PokemonType: React.FC<PokemonTypeProps> = ({ pokemon }) => {
           </Box>
         );
       })}
-    </>
+    </Box>
   );
 };
-
-export default PokemonType;

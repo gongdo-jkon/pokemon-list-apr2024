@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 
@@ -12,11 +11,7 @@ const Header = () => {
         textAlign: "center",
       }}
     >
-      <Box
-        component="span"
-        sx={{ cursor: "pointer" }}
-        onClick={() => navigate("/")}
-      >
+      <Box component="span" sx={{ cursor: "pointer" }} onClick={() => navigate("/")}>
         Pokédex
       </Box>
     </Box>

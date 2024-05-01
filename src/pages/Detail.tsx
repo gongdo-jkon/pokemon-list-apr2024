@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
+import { Pokemon } from "pokenode-ts";
+import { useEffect, useState } from "react";
+import Loader from "../components/common/Loader";
+import Content from "../components/detail/Content";
 import HomeIcon from "../components/icons/HomeIcon";
 import SubTitle from "../components/detail/SubTitle";
-import Content from "../components/detail/Content";
+import { useNavigate, useParams } from "react-router-dom";
+import { NameWrapper } from "../components/detail/NameWrapper";
+import { TypeWrapper } from "../components/common/TypeWrapper";
 import { fetchSpecificPokemonHandler } from "../api/pokemon-api";
 import { ContentWrapper } from "../components/detail/ContentWrapper";
-import { Pokemon } from "pokenode-ts";
-import { TypeWrapper } from "../components/home/TypeWrapper";
-import Loader from "../components/common/Loader";
-import PokemonType from "../components/common/PokemonType";
 
 const Detail = () => {
   const params = useParams();
@@ -23,8 +23,6 @@ const Detail = () => {
   const fetchPokemon = async () => {
     try {
       const result = await fetchSpecificPokemonHandler(params.id as string);
-      console.log("result", result);
-
       result && setSpecificPokemon(result);
     } catch (error) {
       console.error(error);
@@ -66,12 +64,7 @@ const Detail = () => {
             borderRadius: 5,
           }}
         >
-          <Box sx={{ fontWeight: "900", color: "lightgray", mt: 2 }}>
-            No. {String(specificPokemon?.id).padStart(4, "0")}
-          </Box>
-          <Box sx={{ fontSize: "36px", fontWeight: "bold", color: "gray" }}>
-            {specificPokemon?.name && specificPokemon?.name.charAt(0).toUpperCase() + specificPokemon?.name.slice(1)}
-          </Box>
+          <NameWrapper specificPokemon={specificPokemon} />
 
           <Box>
             <Box
@@ -82,10 +75,7 @@ const Detail = () => {
             />
           </Box>
 
-          <TypeWrapper width="200px">
-            {specificPokemon && <PokemonType pokemon={specificPokemon} />}
-            {/* <Box>{specificPokemon?.types.type}</Box> */}
-          </TypeWrapper>
+          <TypeWrapper pokemon={specificPokemon} width="200px" />
 
           <ContentWrapper mt="20px" mb="0">
             <SubTitle title="Height" mx="" />

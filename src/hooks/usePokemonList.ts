@@ -1,12 +1,11 @@
+import { Pokemon } from "pokenode-ts";
 import { useEffect, useState } from "react";
 import { NamedAPIResourceType } from "../shared/types";
 import { fetchAllPokemonHandler, fetchPokemonHandler } from "../api/pokemon-api";
-import { Pokemon } from "pokenode-ts";
 
 let pokemonNameList: NamedAPIResourceType[] | undefined = [];
 
 export const usePokemonList = (pageNum: number) => {
-  //   const [pokemonData, setPokemonData] = useState<PokemonDetailType[]>([]);
   const [pokemonData, setPokemonData] = useState<Pokemon[]>([]);
 
   const [loading, setLoading] = useState(true);

@@ -15,7 +15,6 @@ export const fetchAllPokemonHandler = async (pageNum: number) => {
 
 export const fetchPokemonHandler = async (list: NamedAPIResourceType[]) => {
   try {
-    console.log(list);
     const promises = list.map((item) => pokeApi.getPokemonByName(item.name));
     const results = await Promise.all(promises);
     return results;
