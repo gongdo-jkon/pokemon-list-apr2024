@@ -1,5 +1,9 @@
 import Box from "@mui/material/Box";
-import { SubTitlePropsType } from "../../shared/types";
+
+interface SubTitlePropsType {
+  title: string;
+  mx?: string;
+}
 
 const SubTitle = (props: SubTitlePropsType) => {
   return (

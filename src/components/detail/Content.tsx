@@ -1,5 +1,12 @@
 import Box from "@mui/material/Box";
-import { ContentPropsType } from "../../shared/types";
+
+interface ContentPropsType {
+  content: string | undefined;
+  color?: string;
+  width?: string;
+  p?: string;
+  m?: string;
+}
 
 const Content = (props: ContentPropsType) => {
   return (
