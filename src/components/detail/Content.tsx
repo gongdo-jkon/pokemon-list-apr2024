@@ -5,11 +5,13 @@ const Content = (props: ContentPropsType) => {
   return (
     <Box
       sx={{
-        bgcolor: props.color,
+        fontWeight: "bold",
+        bgcolor: props.color ?? "none",
         borderRadius: 5,
         width: props.width ?? "100px",
-        p: 1.5,
-        m: 1,
+        alignContent: "center",
+        p: props.p ?? 1.5,
+        m: props.m ?? 1,
       }}
     >
       {props.content}

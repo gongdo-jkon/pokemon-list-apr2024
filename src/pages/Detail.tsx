@@ -1,28 +1,31 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
-import { PokemonDetailType } from "../shared/types";
 import HomeIcon from "../components/icons/HomeIcon";
 import SubTitle from "../components/detail/SubTitle";
 import Content from "../components/detail/Content";
+import { fetchSpecificPokemonHandler } from "../api/pokemon-api";
+import { ContentWrapper } from "../components/detail/ContentWrapper";
+import { Pokemon } from "pokenode-ts";
+import { TypeWrapper } from "../components/home/TypeWrapper";
+import Loader from "../components/common/Loader";
+import PokemonType from "../components/common/PokemonType";
 
 const Detail = () => {
   const params = useParams();
-  const id = parseInt(params.id ?? "0");
   const navigate = useNavigate();
-  const [data, setData] = useState<PokemonDetailType>();
 
-  const height = data?.height && data?.height / 10;
-  const weight = data?.weight && data?.weight / 10;
+  const [specificPokemon, setSpecificPokemon] = useState<Pokemon>();
+  const id = parseInt(params.id ?? "0");
+  const height = specificPokemon?.height && specificPokemon?.height / 10;
+  const weight = specificPokemon?.weight && specificPokemon?.weight / 10;
 
   const fetchPokemon = async () => {
     try {
-      const result = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${params.id}`
-      );
-      console.log(result.data);
-      setData(result.data);
+      const result = await fetchSpecificPokemonHandler(params.id as string);
+      console.log("result", result);
+
+      result && setSpecificPokemon(result);
     } catch (error) {
       console.error(error);
     }
@@ -49,81 +52,72 @@ const Detail = () => {
           navigate("/");
         }}
       />
+      {specificPokemon ? (
+        <Box
+          sx={{
+            maxWidth: "600px",
+            display: "flex",
+            flexDirection: "column",
+            textAlign: "center",
+            mx: "auto",
+            my: 2,
+            p: 2,
+            bgcolor: "white",
+            borderRadius: 5,
+          }}
+        >
+          <Box sx={{ fontWeight: "900", color: "lightgray", mt: 2 }}>
+            No. {String(specificPokemon?.id).padStart(4, "0")}
+          </Box>
+          <Box sx={{ fontSize: "36px", fontWeight: "bold", color: "gray" }}>
+            {specificPokemon?.name && specificPokemon?.name.charAt(0).toUpperCase() + specificPokemon?.name.slice(1)}
+          </Box>
 
-      <Box
-        sx={{
-          maxWidth: "600px",
-          display: "flex",
-          flexDirection: "column",
-          textAlign: "center",
-          mx: "auto",
-          my: 2,
-          p: 2,
-          bgcolor: "white",
-          borderRadius: 5,
-        }}
-      >
-        <Box sx={{ fontWeight: "900", color: "lightgray", mt: 2 }}>
-          No. {String(data?.id).padStart(4, "0")}
+          <Box>
+            <Box
+              component="img"
+              src={specificPokemon?.sprites.front_default ?? ""}
+              alt={specificPokemon?.name}
+              sx={{ width: "300px", height: "300px", objectFit: "cover", overflow: "hidden" }}
+            />
+          </Box>
+
+          <TypeWrapper width="200px">
+            {specificPokemon && <PokemonType pokemon={specificPokemon} />}
+            {/* <Box>{specificPokemon?.types.type}</Box> */}
+          </TypeWrapper>
+
+          <ContentWrapper mt="20px" mb="0">
+            <SubTitle title="Height" mx="" />
+            <SubTitle title="Weight" mx="" />
+          </ContentWrapper>
+          <ContentWrapper>
+            <Content content={`${height?.toFixed(1)} m`} p="0" />
+            <Content content={`${weight?.toFixed(1)} kg`} p="0" />
+          </ContentWrapper>
+
+          <SubTitle title="Ability" />
+          <ContentWrapper>
+            {specificPokemon?.abilities.map((e) => {
+              return <Content key={e.ability.name} content={e.ability.name} color="lightcyan" />;
+            })}
+          </ContentWrapper>
+
+          <SubTitle title="Stat" />
+          <Box sx={{ mb: 2 }}>
+            {specificPokemon?.stats.map((e) => {
+              return (
+                <Box key={e.stat.name} sx={{ display: "flex", justifyContent: "center" }}>
+                  <Content content={e.stat.name} color="lightgreen" width="180px" />
+                  <Content content={e.base_stat.toString()} color="lightcoral" width="50px" />
+                </Box>
+              );
+            })}
+          </Box>
         </Box>
-        <Box sx={{ fontSize: "36px", fontWeight: "bold", color: "gray" }}>
-          {data?.name &&
-            data?.name.charAt(0).toUpperCase() + data?.name.slice(1)}
-        </Box>
-        <Box>
-          <Box
-            component="img"
-            src={data?.sprites.front_default}
-            alt={data?.name}
-            sx={{ width: "300px" }}
-          />
-        </Box>
-        <SubTitle title="Height / Weight" />
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          <Content
-            content={`${height?.toFixed(1)} m`}
-            color="lightgoldenrodyellow"
-          />
-          <Content
-            content={`${weight?.toFixed(1)} kg`}
-            color="lightgoldenrodyellow"
-          />
-        </Box>
-        <SubTitle title="Ability" />
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
-          {data?.abilities.map((e) => {
-            return (
-              <Content
-                key={e.ability.name}
-                content={e.ability.name}
-                color="lightcyan"
-              />
-            );
-          })}
-        </Box>
-        <SubTitle title="Stat" />
-        <Box sx={{ mb: 2 }}>
-          {data?.stats.map((e, i) => {
-            return (
-              <Box
-                key={e.stat.name}
-                sx={{ display: "flex", justifyContent: "center" }}
-              >
-                <Content
-                  content={e.stat.name}
-                  color="lightgreen"
-                  width="180px"
-                />
-                <Content
-                  content={e.base_stat.toString()}
-                  color="lightcoral"
-                  width="50px"
-                />
-              </Box>
-            );
-          })}
-        </Box>
-      </Box>
+      ) : (
+        <Loader />
+      )}
     </>
   );
 };
