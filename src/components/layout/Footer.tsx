@@ -9,10 +9,17 @@ const Footer = () => {
         color: "lightslategray",
         cursor: "default",
         textAlign: "center",
-        mt: 4,
+        m: 4,
+        mb: 4,
+        "& a": {
+          mr: 1,
+        },
       }}
     >
-      https://pokeapi.co/docs/v2
+      Email: <a href="mailto:contact@example.com">yeonna18k@gmail.com</a> GitHub:
+      <a href="https://github.com/yeonna18k" target="_blank">
+        NaYeon Kang
+      </a>
     </Box>
   );
 };

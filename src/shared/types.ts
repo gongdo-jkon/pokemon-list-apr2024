@@ -1,3 +1,5 @@
+import { Pokemon } from "pokenode-ts";
+
 export interface NamedAPIResourceType {
   name: string;
   url: string;
@@ -6,51 +8,23 @@ export interface ColorsType {
   [key: string]: string;
 }
 
-export interface PokemonDetailType {
-  id: number;
-  name: string;
-  sprites: {
-    front_default: string;
-  };
-  height: number;
-  weight: number;
-  abilities: AbilitiesType[];
-  stats: StatsType[];
-  types: TypesType[];
-}
-
-interface AbilitiesType {
-  ability: AbilityType;
-  slot: number;
-}
-interface AbilityType {
-  name: string;
-  url: string;
-}
-interface StatsType {
-  base_stat: number;
-  effort: number;
-  stat: StatType;
-}
-interface StatType {
-  name: string;
-  url: string;
-}
-interface TypesType {
-  slot: number;
-  type: Type;
-}
-interface Type {
-  name: string;
-  url: string;
-}
-
-export interface PropsType {
+export interface SubTitlePropsType {
   title: string;
+  mx?: string;
 }
 
 export interface ContentPropsType {
   content: string | undefined;
-  color: string;
+  color?: string;
   width?: string;
+  p?: string;
+  m?: string;
+}
+
+export interface WrapperPropsType {
+  children: React.ReactNode;
+  width?: string;
+  mt?: string;
+  mb?: string;
+  onClick?: () => void;
 }

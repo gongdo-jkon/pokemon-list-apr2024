@@ -1,9 +1,22 @@
 import Box from "@mui/material/Box";
-import { PropsType } from "../../shared/types";
+import { SubTitlePropsType } from "../../shared/types";
 
-const SubTitle = (props: PropsType) => {
+const SubTitle = (props: SubTitlePropsType) => {
   return (
-    <Box sx={{ fontSize: "24px", color: "gray", my: 2 }}>{props.title}</Box>
+    <Box
+      sx={{
+        fontWeight: "bold",
+        color: "white",
+        my: 2,
+        bgcolor: "gray",
+        borderRadius: "20px",
+        width: "auto",
+        px: 5,
+        mx: props.mx ?? "auto",
+      }}
+    >
+      {props.title}
+    </Box>
   );
 };
 
